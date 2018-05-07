@@ -13,8 +13,10 @@ export function activate(context: vscode.ExtensionContext) {
 
     currentToken = settings.get('token');
 
-    vscode.workspace.onDidChangeConfiguration(() => {
-        currentToken = settings.get('token');
+    vscode.workspace.onDidChangeConfiguration(event => {
+        if (event.affectsConfiguration('token')) {
+            currentToken = settings.get('token');
+        }
     });
 
     let runCurrentCode = vscode.commands.registerCommand('glotAssistant.runSelection', () => {
