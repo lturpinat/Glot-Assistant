@@ -28,7 +28,7 @@ export default class GlotManager {
             "ruby": { name: "ruby" },
             "rust": { name: "rust" },
             "swift": { name: "swift" },
-            "typescript": "{name: typescript"
+            "typescript": { name: "typescript" }
         };
 
         return languages[languageId];
@@ -47,10 +47,13 @@ export default class GlotManager {
 
         return await axios.post(`/${language}/latest`, `{"files": [{"name": "${fileName}", "content": "${content}"}]}`, axiosConfig)
             .then((response) => {
+                if (response.status === 401) {
+                    return Promise.reject("Couldn't contact API" + response.statusText);
+                }
                 return Promise.resolve({ stdout: response.data.stdout, stderr: response.data.stderr });
             })
             .catch(error => {
-                return Promise.reject("Couldn't contact API");
+                return Promise.reject("Couldn't contact API" + error);
             });
     }
 
