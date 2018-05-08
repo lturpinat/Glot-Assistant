@@ -60,10 +60,13 @@ function executeCode(token: string | undefined, manager: GlotManager, executeOnl
     }
 
     vscode.window.showInformationMessage("Executing code...");
-    manager.executeCode(token, language.name, editor.document.fileName, text).then(response => {
+    manager.executeCode(token, language, editor.document.fileName, text).then(response => {
         if (!response) {
             return;
         }
+
+        const stdout = response[0];
+        const stderr = response[1];
 
         const time = new Date();
         channel.appendLine(
@@ -72,8 +75,8 @@ function executeCode(token: string | undefined, manager: GlotManager, executeOnl
             ("0" + time.getMinutes()).slice(-2) + ":" +
             ("0" + time.getSeconds()).slice(-2) + "]\n");
 
-        channel.appendLine("Output : \n" + response.stdout);
-        channel.appendLine("Errors : \n" + response.stderr + "\n");
+        channel.appendLine("Output : \n" + stdout);
+        channel.appendLine("Errors : \n" + stderr + "\n");
     }).catch(error => {
         vscode.window.showErrorMessage("Something went wront with the API (see logs for more details)!");
         console.error(error);
