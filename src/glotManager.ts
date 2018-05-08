@@ -7,34 +7,34 @@ export default class GlotManager {
         axios.defaults.baseURL = 'https://run.glot.io/languages';
     }
 
-    getLanguage(languageId: string): any {
-        const languages: any = {
-            "shellscript": { name: "bash" },
-            "c": { name: "c" },
-            "clojure": { name: "clojure" },
-            "coffeescript": { name: "coffescript" },
-            "cpp": { name: "cpp" },
-            "csharp": { name: "csharp" },
-            "fsharp": { name: "fsharp" },
-            "go": { name: "go" },
-            "groovy": { name: "groovy" },
-            "java": { name: "java" },
-            "javascript": { name: "javascript" },
-            "lua": { name: "lua" },
-            "perl": { name: "perl" },
-            "perl6": { name: "perl6" },
-            "php": { name: "php" },
-            "python": { name: "python" },
-            "ruby": { name: "ruby" },
-            "rust": { name: "rust" },
-            "swift": { name: "swift" },
-            "typescript": { name: "typescript" }
+    getLanguage(languageId: string): string {
+        const languages: { [s: string]: string; } = {
+            "shellscript": "bash",
+            "c": "c",
+            "clojure": "clojure",
+            "coffeescript": "coffescript",
+            "cpp": "cpp",
+            "csharp": "csharp",
+            "fsharp": "fsharp",
+            "go": "go",
+            "groovy": "groovy",
+            "java": "java",
+            "javascript": "javascript",
+            "lua": "lua",
+            "perl": "perl",
+            "perl6": "perl6",
+            "php": "php",
+            "python": "python",
+            "ruby": "ruby",
+            "rust": "rust",
+            "swift": "swift",
+            "typescript": "typescript"
         };
 
         return languages[languageId];
     }
 
-    async executeCode(token: string, language: string, fileName: string, content: string): Promise<any | void> {
+    async executeCode(token: string, language: string, fileName: string, content: string): Promise<[any, any] | any> {
         const axiosConfig: AxiosRequestConfig = {
             headers: {
                 'Authorization': 'Token ' + token,
@@ -45,23 +45,30 @@ export default class GlotManager {
             }
         };
 
-        return await axios.post(`/${language}/latest`, `{"files": [{"name": "${fileName}", "content": "${content}"}]}`, axiosConfig)
+        const queryBody = `{ "files": [{ "name": "${fileName}", "content": ${JSON.stringify(content)} }] }`;
+
+        return await axios.post(`/${language}/latest`, queryBody, axiosConfig)
             .then((response) => {
-                if (response.status === 401) {
-                    return Promise.reject("Couldn't contact API" + response.statusText);
+                if (response.status === 401 || response.status === 400) {
+                    return Promise.reject(`${response.statusText} (${response.status})`);
                 }
-                return Promise.resolve({ stdout: response.data.stdout, stderr: response.data.stderr });
+
+                return Promise.resolve([response.data.stdout, response.data.stderr]);
             })
             .catch(error => {
-                return Promise.reject("Couldn't contact API" + error);
+                return Promise.reject("API Error: " + error);
             });
     }
 
     async getAvailableLanguages(): Promise<Array<object> | void> {
         return await axios.get('/').then(response => {
+            if (response.status === 401 || response.status === 400) {
+                return Promise.reject(`${response.statusText} (${response.status})`);
+            }
+
             return Promise.resolve(response.data);
-        }).catch(err => {
-            return Promise.reject("Couldn't contact API");
+        }).catch(error => {
+            return Promise.reject("API Error:" + error);
         });
     }
 }
