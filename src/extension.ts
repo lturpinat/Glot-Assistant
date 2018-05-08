@@ -35,24 +35,32 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(setToken);
 }
 
+/**
+ * Execute a block of code withing Glot.io
+ * @param token access token for the API
+ * @param manager instance of GlotManager
+ * @param executeOnlySelectedCode execute only the selected code
+ */
 function executeCode(token: string | undefined, manager: GlotManager, executeOnlySelectedCode: boolean = false) {
     if (!token) {
         vscode.window.showErrorMessage("Cannot execute this code for there is no user token set yet!");
         return;
     }
 
-    let editor = vscode.window.activeTextEditor;
+    const editor = vscode.window.activeTextEditor;
     if (!editor) {
         vscode.window.showErrorMessage("You need to have an oppened editor to do this!");
         return;
     }
 
     let selection = editor.selection;
-    let text = executeOnlySelectedCode && !selection.isEmpty
+    //If the user chose the selection but there is none, choose the whole document
+    const text = executeOnlySelectedCode && !selection.isEmpty
         ? editor.document.getText(selection)
         : editor.document.getText();
 
-    let language = manager.getLanguage(editor.document.languageId);
+    //Convert the vscode language id into the Glot.io's one
+    const language = manager.getLanguage(editor.document.languageId);
 
     if (!language) {
         vscode.window.showErrorMessage("Glot doesn't support this language. Abort!");
@@ -83,6 +91,9 @@ function executeCode(token: string | undefined, manager: GlotManager, executeOnl
     });
 }
 
+/**
+ * Query the user to provide a token for the API
+ */
 function getToken() {
     let options: vscode.InputBoxOptions = {
         prompt: "Please fill-in your personnal token to carry on:",

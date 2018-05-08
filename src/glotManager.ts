@@ -7,6 +7,10 @@ export default class GlotManager {
         axios.defaults.baseURL = 'https://run.glot.io/languages';
     }
 
+    /**
+     * Convert the vscode language id into the Glot.io language id
+     * @param languageId vscode language id
+     */
     getLanguage(languageId: string): string {
         const languages: { [s: string]: string; } = {
             "shellscript": "bash",
@@ -34,6 +38,14 @@ export default class GlotManager {
         return languages[languageId];
     }
 
+    /**
+     * Execute code within Glot.io and returns stdout & stderr
+     * @param token access token to the API
+     * @param language Glot.io language id
+     * @param fileName name of the file
+     * @param content code to execute
+     * @returns tuple with [stdout:string, stderr:string] if successful
+     */
     async executeCode(token: string, language: string, fileName: string, content: string): Promise<[any, any] | any> {
         const axiosConfig: AxiosRequestConfig = {
             headers: {
@@ -60,6 +72,9 @@ export default class GlotManager {
             });
     }
 
+    /**
+     * Return all the available languages from Glot.io
+     */
     async getAvailableLanguages(): Promise<Array<object> | void> {
         return await axios.get('/').then(response => {
             if (response.status === 401 || response.status === 400) {
