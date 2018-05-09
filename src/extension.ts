@@ -67,7 +67,7 @@ function executeCode(token: string | undefined, manager: GlotManager, executeOnl
         return;
     }
 
-    vscode.window.showInformationMessage("Executing code...");
+    vscode.window.setStatusBarMessage("Executing code...");
     manager.executeCode(token, language, editor.document.fileName, text).then(response => {
         if (!response) {
             return;
@@ -75,6 +75,8 @@ function executeCode(token: string | undefined, manager: GlotManager, executeOnl
 
         const stdout = response[0];
         const stderr = response[1];
+
+        vscode.window.setStatusBarMessage("Executed !");
 
         const time = new Date();
         channel.appendLine(
