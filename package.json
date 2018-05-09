@@ -11,7 +11,9 @@
         "Other"
     ],
     "activationEvents": [
-        "*"
+        "onCommand:glotAssistant.setToken",
+        "onCommand:glotAssistant.runCode",
+        "onCommand:glotAssistant.runSelection"
     ],
     "main": "./out/extension",
     "contributes": {
