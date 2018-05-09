@@ -1,8 +1,9 @@
 # Glot Assistant
 
-Quickly run code with Glot.io
+Quickly run code with Glot.io.
+
 Select the code you want to execute and get the results in a bit!
-Glot supports many languages so far : Python, Ruby, C, C++, C#... (see more here: https://glot.io/)
+Glot supports many languages: Python, Ruby, C, C++, C#... (see more here: https://glot.io/)
 
 Glot Assistant is not affiliated to Glot.io in anyway.
 
