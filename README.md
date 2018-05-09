@@ -11,8 +11,7 @@ Glot Assistant is not affiliated to Glot.io in anyway.
 * Execute either the whole document or a specific part of your code
 * Get the standards and errors outputs straight away,
 
-\!\[Extension overview\]\(images/animation.gif\)
-
+![Extension overview](images/animation.gif)
 ## Configuration
 
 In order to use Glot.io services, you need a token. To get one,
