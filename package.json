@@ -8,7 +8,19 @@
         "vscode": "^1.23.0"
     },
     "categories": [
+        "Programming Languages",
         "Other"
+    ],
+    "icon": "images/icon.png",
+    "homepage": "https://github.com/lturpinat/Glot-Assitant/blob/master/README.md",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/lturpinat/Glot-Assitant.git"
+    },
+    "qna": "marketplace",
+    "keywords": [
+        "glot.io",
+        "running"
     ],
     "activationEvents": [
         "onCommand:glotAssistant.setToken",
@@ -33,7 +45,7 @@
         ],
         "configuration": {
             "type": "object",
-            "title": "TODO Highlight",
+            "title": "Glot Assistant Configuration",
             "properties": {
                 "glotAssistant.token": {
                     "type": "string",
