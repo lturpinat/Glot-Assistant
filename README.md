@@ -10,7 +10,7 @@ Glot Assistant is not affiliated to Glot.io in anyway.
 ## Features
 
 * Execute either the whole document or a specific part of your code
-* Get the standards and errors outputs straight away,
+* Get the standards and errors outputs straight away
 
 ![Extension overview](images/animation.gif)
 ## Configuration
