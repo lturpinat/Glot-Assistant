@@ -1,65 +1,27 @@
-# glot-assistant README
+# Glot Assistant
 
-This is the README for your extension "glot-assistant". After writing up a brief description, we recommend including the following sections.
+Quickly run code with Glot.io
+Select the code you want to execute and get the results in a bit!
+Glot supports many languages so far : Python, Ruby, C, C++, C#... (see more here: https://glot.io/)
+
+Glot Assistant is not affiliated to Glot.io in anyway.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+* Execute either the whole document or a specific part of your code
+* Get the standards and errors outputs straight away,
 
-For example if there is an image subfolder under your extension project workspace:
+\!\[Extension overview\]\(images/animation.gif\)
 
-\!\[feature X\]\(images/feature-x.png\)
+## Configuration
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+In order to use Glot.io services, you need a token. To get one,
+follow those steps:
 
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+1) Create an account on https://glot.io/
+2) Grab a token on https://glot.io/account/token
+3) Execute "Glot Assistant: Set your access token" to set your token
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+* `glotAssistant.token`: required token to communicate with the Glot.io API
