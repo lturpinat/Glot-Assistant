@@ -3,8 +3,8 @@ import axios, { AxiosRequestConfig } from 'axios';
 
 export default class GlotManager {
 
-    constructor() {
-        axios.defaults.baseURL = 'https://run.glot.io/languages';
+    constructor(server: string) {
+        axios.defaults.baseURL = `https://${server}/languages`;
     }
 
     /**
