@@ -35,6 +35,10 @@
                 "title": "Glot Assistant: Set your access token"
             },
             {
+                "command": "glotAssistant.setServer",
+                "title": "Glot Assistant: Set your server address"
+            },
+            {
                 "command": "glotAssistant.runCode",
                 "title": "Glot Assistant: Execute page code"
             },
@@ -51,6 +55,11 @@
                     "type": "string",
                     "default": "",
                     "description": "User token to authentificate with Glot.io"
+                },
+                "glotAssistant.server": {
+                    "type": "string",
+                    "default": "run.glot.io",
+                    "description": "Set the Glot.io insntance you want to use"
                 }
             }
         }
