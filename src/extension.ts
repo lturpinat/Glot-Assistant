@@ -2,12 +2,16 @@
 import * as vscode from 'vscode';
 import GlotManager from './glotManager';
 
+const DEFAULT_SERVER = "run.glot.io";
+
 let currentToken: string | undefined = undefined;
 const settings = vscode.workspace.getConfiguration('glotAssistant');
 const channel: vscode.OutputChannel = vscode.window.createOutputChannel("Glot.io");
-const manager = new GlotManager();
+let manager: GlotManager;
 
 export function activate(context: vscode.ExtensionContext) {
+    manager = getGlotInstance(settings.get('server'));
+
     channel.show();
     console.log('Congratulations, your extension "glot-assistant" is now active!');
 
@@ -16,6 +20,9 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.workspace.onDidChangeConfiguration(event => {
         if (event.affectsConfiguration('token')) {
             currentToken = settings.get('token');
+        }
+        if (event.affectsConfiguration('server')) {
+            manager = getGlotInstance(settings.get('server'));
         }
     });
 
@@ -26,13 +33,29 @@ export function activate(context: vscode.ExtensionContext) {
     let runWholeCode = vscode.commands.registerCommand('glotAssistant.runCode', () => {
         executeCode(currentToken, manager, false);
     });
+
     let setToken = vscode.commands.registerCommand('glotAssistant.setToken', () => {
         getToken();
+    });
+
+    let setServerAddress = vscode.commands.registerCommand('glotAssistant.setServer', () => {
+        getServer();
     });
 
     context.subscriptions.push(runCurrentCode);
     context.subscriptions.push(runWholeCode);
     context.subscriptions.push(setToken);
+    context.subscriptions.push(setServerAddress);
+}
+
+function getGlotInstance(server: string | undefined): GlotManager {
+    //If server in invalid, use default run.glot.io
+    if (!server) {
+        vscode.window.showWarningMessage("Couldn't read the server address, using default instance ('run.glot.io')!");
+        return new GlotManager(DEFAULT_SERVER);
+    }
+
+    return new GlotManager(server);
 }
 
 /**
@@ -43,7 +66,7 @@ export function activate(context: vscode.ExtensionContext) {
  */
 function executeCode(token: string | undefined, manager: GlotManager, executeOnlySelectedCode: boolean = false) {
     if (!token) {
-        vscode.window.showErrorMessage("Cannot execute this code for there is no user token set yet!");
+        vscode.window.showErrorMessage("This code cannot be executed without a user token!");
         return;
     }
 
@@ -118,6 +141,29 @@ function getToken() {
         settings.update('token', value, true).then(() => {
             currentToken = value;
         });
+    });
+}
+
+/**
+ * Query the user to provide a server address
+ */
+function getServer() {
+    let options: vscode.InputBoxOptions = {
+        prompt: "Please fill-in your server address to carry on:",
+        placeHolder: "Server address...",
+    };
+
+    vscode.window.showInputBox(options).then(value => {
+        if (!value) {
+            vscode.window.showWarningMessage("I didn't get your server address, please try again!");
+            return;
+        }
+
+        settings.update('server', value, true).then(() => {
+            currentToken = value;
+        });
+
+        vscode.window.showInformationMessage("Your server address has correctly been updated!");
     });
 }
 
