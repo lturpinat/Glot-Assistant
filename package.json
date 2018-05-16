@@ -2,7 +2,7 @@
     "name": "glot-assistant",
     "displayName": "Glot Assistant",
     "description": "Execute your code online with Glot.io",
-    "version": "0.0.1",
+    "version": "0.2.0",
     "publisher": "lturpinat",
     "engines": {
         "vscode": "^1.23.0"
