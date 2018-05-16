@@ -1,7 +1,11 @@
 # Change Log
-All notable changes to the "glot-assistant" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [0.2.0] - 16-05-2018
+
+- Adding support for a custom Glot.io server
+
+## [0.1.0] - 09-05-2018
+
 - Initial release
